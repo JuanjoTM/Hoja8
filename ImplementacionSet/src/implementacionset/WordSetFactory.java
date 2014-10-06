@@ -18,6 +18,8 @@ public class WordSetFactory {
     {
         if (tipo == 1)
             return new SimpleSet();
+        else if (tipo == 5)
+            return new SimpleSetTM();
         else
             // aqui se regresara el set empleando sus implementaciones:
             // if tipo == 2 cree una instancia para un Wordset implementao con Red Black Tree
