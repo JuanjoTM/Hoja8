@@ -18,6 +18,8 @@ public class WordSetFactory {
     {
         if (tipo == 1)
             return new SimpleSet();
+        else if (tipo == 2)
+            return new SimpleSetRBT();
         else if (tipo == 3)
             return new SimpleSetST();
         else if (tipo == 4)
