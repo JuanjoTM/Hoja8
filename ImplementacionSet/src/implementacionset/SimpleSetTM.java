@@ -19,10 +19,16 @@ public class SimpleSetTM implements WordSet{
 	
 	public Word get(Word word)
 	{
-            //int index = base.indexOf(word);
+            for(int i = 0; i<cant; i++){
+                Word original = base.get(i);
+                //System.out.println(original.getWord());
+                if(original.getWord().equals(word.getWord())){
+                   word.setType(original.getType());
+                }
+            }
             boolean index = base.containsValue(word);
             if(!index) return null;
-            return word;
+                return word;
 	}
 	
 	public void add(Word wordObject)
