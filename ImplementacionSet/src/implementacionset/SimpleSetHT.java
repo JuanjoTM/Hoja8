@@ -19,6 +19,13 @@ public class SimpleSetHT implements WordSet{
 	
 	public Word get(Word word)
 	{
+            for(int i = 0; i<cant; i++){
+                Word original = base.get(i);
+                    if(original.getWord().equals(word.getWord())){
+                       word.setType(original.getType());
+                       i = cant;
+                    }
+		}
             boolean index = base.containsValue(word);
             if(!index) return null;
             return word;
