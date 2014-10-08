@@ -16,9 +16,11 @@ public class SimpleSetRBT implements WordSet{
 	
 	public Word get(Word word)
 	{
-            boolean index = base.equals(word);
-            if(!index) return null;
-            return word;
+            boolean index = base.contains(word);
+            if(!index) 
+                return null;
+            else
+                return base.find(word);
 	}
 	
 	public void add(Word wordObject)

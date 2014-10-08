@@ -1,13 +1,13 @@
 
 package implementacionset;
-public class RedBlackTree<T>
+public class RedBlackTree<T extends Comparable<T>>
     {
         /**
          * Construct the tree.
          * @param negInf a value less than or equal to all others.
      * @return 
          */
-        public RedBlackTree( Comparable negInf )
+        public RedBlackTree( T negInf )
         {
             header      = new RedBlackNode<>( negInf );
             header.left = header.right = nullNode;
@@ -17,7 +17,7 @@ public class RedBlackTree<T>
          * Insert into the tree. Does nothing if item already present.
          * @param item the item to insert.
          */
-        public void insert( Comparable item )
+        public void insert( T item )
         {
             current = parent = grand = header;
             nullNode.element = item;
@@ -25,7 +25,7 @@ public class RedBlackTree<T>
             while( current.element.compareTo( item ) != 0 )
             {
                 great = grand; grand = parent; parent = current;
-                current = item.compareTo( current.element ) < 0 ?
+                current = item.compareTo( (T)current.element ) < 0 ?
                              current.left : current.right;
 
                     // Check if two red children; fix if so
@@ -39,7 +39,7 @@ public class RedBlackTree<T>
             current = new RedBlackNode( item, nullNode, nullNode );
 
                 // Attach to parent
-            if( item.compareTo( parent.element ) < 0 )
+            if( item.compareTo( (T)parent.element ) < 0 )
                 parent.left = current;
             else
                 parent.right = current;
@@ -51,7 +51,7 @@ public class RedBlackTree<T>
          * Not implemented in this version.
          * @param x the item to remove.
          */
-        public void remove( Comparable x )
+        public void remove( T x )
         {
             System.out.println( "Remove is not implemented" );
         }
@@ -60,7 +60,7 @@ public class RedBlackTree<T>
          * Find the smallest item  the tree.
          * @return the smallest item or null if empty.
          */
-        public Comparable findMin( )
+        public T findMin( )
         {
             if( isEmpty( ) )
                 return null;
@@ -77,7 +77,7 @@ public class RedBlackTree<T>
          * Find the largest item in the tree.
          * @return the largest item or null if empty.
          */
-        public Comparable findMax( )
+        public T findMax( )
         {
             if( isEmpty( ) )
                 return null;
@@ -95,24 +95,33 @@ public class RedBlackTree<T>
          * @param x the item to search for.
          * @return the matching item or null if not found.
          */
-        public Comparable find( Comparable x )
+        public T find( T x )
         {
             nullNode.element = x;
             current = header.right;
 
             for( ; ; )
             {
-                if( x.compareTo( current.element ) < 0 )
+                if( x.compareTo( (T)current.element ) < 0 )
                     current = current.left;
-                else if( x.compareTo( current.element ) > 0 ) 
+                else if( x.compareTo( (T)current.element ) > 0 ) 
                     current = current.right;
                 else if( current != nullNode )
-                    return current.element;
+                    return (T)current.element;
                 else
                     return null;
             }
         }
-
+         
+        /**
+	 * Check if the tree contains the given element.
+	 * @param element
+	 * @return True if present, false otherwise
+	 */
+	public boolean contains(T element) {
+		return find(element) != null;
+	}
+        
         /**
          * Make the tree logically empty.
          */
@@ -160,7 +169,7 @@ public class RedBlackTree<T>
          * if a node has two red children. Performs flip and rotations.
          * @param item the item being inserted.
          */
-        private void handleReorient( Comparable item )
+        private void handleReorient( T item )
         {
                 // Do the color flip
             current.color = RED;
@@ -170,8 +179,8 @@ public class RedBlackTree<T>
             if( parent.color == RED )   // Have to rotate
             {
                 grand.color = RED;
-                if( ( item.compareTo( grand.element ) < 0 ) !=
-                    ( item.compareTo( parent.element ) < 0 ) )
+                if( ( item.compareTo( (T)grand.element ) < 0 ) !=
+                    ( item.compareTo( (T)parent.element ) < 0 ) )
                     parent = rotate( item, grand );  // Start dbl rotate
                 current = rotate( item, great );
                 current.color = BLACK;
@@ -187,14 +196,14 @@ public class RedBlackTree<T>
          * @param parent the parent of the root of the rotated subtree.
          * @return the root of the rotated subtree.
          */
-        private RedBlackNode rotate( Comparable item, RedBlackNode<T> parent )
+        private RedBlackNode rotate( T item, RedBlackNode<T> parent )
         {
             if( item.compareTo( parent.element ) < 0 )
-                return parent.left = item.compareTo( parent.left.element ) < 0 ?
+                return parent.left = item.compareTo( (T)parent.left.element ) < 0 ?
                     rotateWithLeftChild( parent.left )  :  // LL
                     rotateWithRightChild( parent.left ) ;  // LR
             else
-                return parent.right = item.compareTo( parent.right.element ) < 0 ?
+                return parent.right = item.compareTo( (T)parent.right.element ) < 0 ?
                     rotateWithLeftChild( parent.right ) :  // RL
                     rotateWithRightChild( parent.right );  // RR
         }

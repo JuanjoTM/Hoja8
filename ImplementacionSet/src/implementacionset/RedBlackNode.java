@@ -1,15 +1,15 @@
 
 package implementacionset;
 
- class RedBlackNode<T>
+ class RedBlackNode<T extends Comparable<T>>
     {
             // Constructors
-        RedBlackNode( Comparable theElement )
+        RedBlackNode( T theElement )
         {
             this( theElement, null, null );
         }
 
-        RedBlackNode( Comparable theElement, RedBlackNode<T> lt, RedBlackNode<T> rt )
+        RedBlackNode( T theElement, RedBlackNode lt, RedBlackNode rt )
         {
             element  = theElement;
             left     = lt;
@@ -18,8 +18,8 @@ package implementacionset;
         }
 
             // Friendly data; accessible by other package routines
-        Comparable   element;    // The data in the node
-        RedBlackNode<T> left;       // Left child
-        RedBlackNode<T> right;      // Right child
+        T   element;    // The data in the node
+        RedBlackNode left;       // Left child
+        RedBlackNode right;      // Right child
         int          color;      // Color
     }
